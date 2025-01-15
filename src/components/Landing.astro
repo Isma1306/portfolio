@@ -1,0 +1,28 @@
+---
+import Card from './Card.astro';
+---
+
+<div class="container">
+<h1>WELCOME</h1>
+<Card class="first">
+  <h2>card title</h2>
+  <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quibusdam, adipisci sed neque modi nulla voluptas ipsa nam quo laborum necessitatibus magni dolore natus similique cupiditate saepe minus illum et quasi.</p>
+</Card>
+</div>
+
+<style>
+.container {
+
+    width: 100%;
+    height: 100vh;
+    padding: 5px;
+  padding: 1rem;
+  background-color: light-dark(saddlebrown, lavender);
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  grid-template-rows: repeat(5, 1fr);
+
+}
+
+
+</style>
