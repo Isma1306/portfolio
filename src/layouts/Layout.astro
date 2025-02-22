@@ -1,24 +1,21 @@
-<!doctype html>
-<html lang="en">
-	<head>
-		<meta charset="UTF-8" />
-		<meta name="viewport" content="width=device-width" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Ismael Carrea</title>
-	</head>
-	<body>
-		<slot />
-	</body>
-</html>
+---
+import Navbar from '../components/Navbar.astro'
+import { ClientRouter, fade } from 'astro:transitions'
+import '../styles/global.css'
+---
 
-<style is:global>
-	html,body {
-		color-scheme: light dark;
-		box-sizing:border-box;
-				margin: 0;
-	}
-*, *:before, *:after {
-  box-sizing: inherit;
-}
-</style>
+<!doctype html>
+<html lang='en' data-theme='auto'>
+  <head>
+    <meta charset='UTF-8' />
+    <meta name='viewport' content='width=device-width' />
+    <link rel='icon' type='image/svg+xml' href='/favicon.svg' />
+    <meta name='generator' content={Astro.generator} />
+    <title>Ismael Carrea</title>
+    <ClientRouter transition:animate='slide' />
+  </head>
+  <body>
+    <Navbar />
+    <slot />
+  </body>
+</html>

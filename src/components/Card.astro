@@ -1,14 +1,16 @@
+---
+const { class: className } = Astro.props
+---
 
-<div class="card">
-<slot />
+<div class:list={['card', className]} class='card'>
+  <slot />
 </div>
 
 <style>
-  .card {
+  /* .card {
     border-radius: 0.5rem;
     padding: 0.5rem;
-
-    background-color: light-dark(lavender, saddlebrown);
-    color: light-dark(saddlebrown, lavender);
-  }
+    background-color: light-dark(var(--primary), var(--secondary));
+    color: light-dark(var(--secondary), var(--primary));
+  } */
 </style>
