@@ -1,0 +1,80 @@
+[
+  {
+    "position": "Web UI Developer",
+    "company": "Globant",
+    "start": "06/2023",
+    "end": "Present",
+    "location": "Italy - Remote",
+    "projects": [
+      {
+        "title": "",
+        "tasks": [
+          "Collaborated closely with the PM to estimate, plan and execute a full refactor of two old projects.",
+          "Coordinated with the BE team new API calls improving the DX and optimizing the platform performance.",
+          "Led the migration of the angular 8 projects to Angular 16, incorporating new best practices and improving code quality meeting SonnarQube quality standards.",
+          "Supervised a junior developer in the creation of unit test in Jasmine and E2E test in Cypress for the newly developed code ensuring proper coverage.",
+          "Improved the local dev environment with a dockerized version of the BE and created new pipelines to streamline the delivery process in Jenkins and OpenShift.",
+          "Contributed to writing technical documentation of the new features required by the client and helped to estimate the tasks."
+        ]
+      }
+    ]
+  },
+  {
+    "position": "Software Developer",
+    "company": "Hyntelo",
+
+    "start": "08/2022",
+    "end": "06/2023",
+    "location": "Italy - Remote",
+    "projects": [
+      {
+        "title": "Full stack GIS app",
+        "tasks": [
+          "Leaded the front-end development of an existing angular GIS project. Including CRUD of layers, data manipulation with leaflet and creation of Pdf reports.",
+          "Refactored the code to optimize it and divided the components in modules to handle lazy loading.",
+          "Improved support to different formats of layers with the help of the leaflet library.",
+          "Written scripts to monitor and keep running the BE and the geoserver.",
+          "Helped in the configuration of the Geoserver and the decision on how to implement solutions to optimize the performance."
+        ]
+      },
+      {
+        "title": "Bank dashboard",
+        "tasks": [
+          "In charge of the state management service and the architecture of the data flow using RxJS and GraphQL for a fully reactive app.",
+          "Worked close to the PM and the designer to produce a responsive UI / UX according to the requirements of the client.",
+          "Coded with reusability and simplicity in mind to create a easy to read and maintainable code.",
+          "Responsible of controlling the code quality of the new developers."
+        ]
+      }
+    ]
+  },
+  {
+    "position": "Software Developer",
+    "company": "Hyntelo",
+
+    "start": "08/2022",
+    "end": "06/2023",
+    "location": "Italy - Remote",
+    "projects": [
+      {
+        "title": "Full stack GIS app",
+        "tasks": [
+          "Leaded the front-end development of an existing angular GIS project. Including CRUD of layers, data manipulation with leaflet and creation of Pdf reports.",
+          "Refactored the code to optimize it and divided the components in modules to handle lazy loading.",
+          "Improved support to different formats of layers with the help of the leaflet library.",
+          "Written scripts to monitor and keep running the BE and the geoserver.",
+          "Helped in the configuration of the Geoserver and the decision on how to implement solutions to optimize the performance."
+        ]
+      },
+      {
+        "title": "Bank dashboard",
+        "tasks": [
+          "In charge of the state management service and the architecture of the data flow using RxJS and GraphQL for a fully reactive app.",
+          "Worked close to the PM and the designer to produce a responsive UI / UX according to the requirements of the client.",
+          "Coded with reusability and simplicity in mind to create a easy to read and maintainable code.",
+          "Responsible of controlling the code quality of the new developers."
+        ]
+      }
+    ]
+  }
+]

@@ -22,27 +22,22 @@
 
 } */
 
-
 html,
 body {
-
   --highlight: #fb8500;
   --primary: #023047;
   --secondary: #219ebc;
 
   color-scheme: light dark;
-  box-sizing: border-box;
-  margin: 0;
-  background: #0F2027;
+
+  background: #0f2027;
   /* fallback for old browsers */
-  background: -webkit-linear-gradient(to right, #2C5364, #203A43, #0F2027);
+  background: -webkit-linear-gradient(to right, #2c5364, #203a43, #0f2027);
   /* Chrome 10-25, Safari 5.1-6 */
-  background: linear-gradient(to right, #2C5364, #203A43, #0F2027);
+  background: linear-gradient(to right, #2c5364, #203a43, #0f2027);
   /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
-  ;
-  font-family: 'RobotoMono',
-    Courier,
-    monospace;
+  font-family: 'RobotoMono', Courier, monospace;
+  font-size: 14px;
 
   h1,
   h2,
@@ -55,18 +50,12 @@ body {
 *,
 *:before,
 *:after {
-  box-sizing: inherit;
-}
-
-* {
   margin: 0;
   box-sizing: border-box;
 }
 
 .mono {
-  font-family: 'RobotoMono',
-    Courier,
-    monospace;
+  font-family: 'RobotoMono', Courier, monospace;
 }
 
 .sans {
@@ -78,20 +67,34 @@ body {
   text-shadow: 2px 2px white;
 }
 
-
 .link {
   color: white;
 
   * {
-    color: white
+    color: white;
   }
-
 }
 
 .link:hover {
   color: var(--secondary);
 
   * {
-    color: var(--secondary)
+    color: var(--secondary);
   }
+}
+
+.col {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.row {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+
+ul {
+  list-style: none;
 }

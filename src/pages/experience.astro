@@ -1,0 +1,21 @@
+---
+import Layout from '../layouts/Layout.astro'
+import experienceList from '../assets/experience.json'
+import ExpCard from '../components/ExpCard.astro'
+---
+
+<Layout>
+  <h1>Experience</h1>
+  <div class='container'>
+    {experienceList.map((exp, idx) => <ExpCard side={idx % 2 === 0 ? 'left' : 'right'} experience={exp} />)}
+  </div>
+</Layout>
+<style>
+  .container {
+    margin: auto;
+    display: flex;
+    flex-direction: column;
+    max-width: 900px;
+    background-image: linear-gradient(to bottom, rgba(255, 0, 0, 0), color-mix(in srgb, var(--secondary) 60%, transparent));
+  }
+</style>

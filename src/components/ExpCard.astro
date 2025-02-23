@@ -1,0 +1,97 @@
+---
+import type { Experience } from '../types/experience'
+
+interface Props {
+  experience: Experience
+  side: string
+}
+const { experience, side } = Astro.props
+---
+
+<section class={side}>
+  <div class='text col'>
+    <h2>{experience.company}</h2>
+    <h3>{experience.position}</h3>
+    <h3>{experience.location}</h3>
+    <h4>
+      {experience.start} - {experience.end}
+    </h4>
+  </div>
+  <div class='center col'>
+    <div class='dot col'><div></div></div>
+  </div>
+  <div class='projects col'>
+    <ul>
+      {
+        experience.projects.map((project) => (
+          <li>
+            <h3>{project.title}</h3>
+            <ul>
+              {project.tasks.map((task) => (
+                <li>{task}</li>
+              ))}
+            </ul>
+          </li>
+        ))
+      }
+    </ul>
+  </div>
+</section>
+<style>
+  section {
+    display: flex;
+  }
+  .left {
+    flex-direction: row;
+    .text {
+      align-items: flex-end;
+    }
+  }
+  .right {
+    flex-direction: row-reverse;
+    .text {
+      align-items: flex-start;
+    }
+  }
+  .projects,
+  .text {
+    width: 50%;
+    padding: 1rem;
+  }
+
+  .center {
+    border: solid 0.2em color-mix(in srgb, var(--highlight) 90%, transparent);
+    width: 0;
+  }
+  .dot {
+    width: 2rem;
+    height: 2rem;
+    border: solid 0.2em color-mix(in srgb, var(--highlight) 70%, transparent);
+    border-radius: 90%;
+    transform: translateX(-50%);
+    align-items: center;
+
+    div {
+      background-color: var(--highlight);
+      border-radius: 90%;
+      width: 1rem;
+      height: 1rem;
+    }
+  }
+  .projects {
+    h3 {
+      margin-bottom: 1rem;
+    }
+    ul {
+      padding-left: 0.5rem;
+      list-style-type: '=>';
+      li {
+        padding-left: 0.5rem;
+        margin-bottom: 1rem;
+        ul {
+          list-style-type: 'x';
+        }
+      }
+    }
+  }
+</style>
