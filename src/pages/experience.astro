@@ -5,8 +5,8 @@ import ExpCard from '../components/ExpCard.astro'
 ---
 
 <Layout title='Experience'>
-  <h1>Experience</h1>
   <div class='container'>
+    <h1>Experience</h1>
     {experienceList.map((exp, idx) => <ExpCard side={idx % 2 === 0 ? 'left' : 'right'} experience={exp} />)}
   </div>
 </Layout>
