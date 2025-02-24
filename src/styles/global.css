@@ -1,0 +1,100 @@
+@font-face {
+  font-family: 'RobotoMono';
+  src: url('/fonts/RobotoMono.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'JosefinSans';
+  src: url('/fonts/JosefinSans.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* :root {
+
+  --highlight: fb8500;
+  --primary: 023047;
+  --secondary: 219ebc;
+
+} */
+
+html,
+body {
+  --highlight: #fb8500;
+  --primary: #023047;
+  --secondary: #219ebc;
+
+  color-scheme: light dark;
+
+  background: #0f2027;
+  /* fallback for old browsers */
+  background: -webkit-linear-gradient(to right, #2c5364, #203a43, #0f2027);
+  /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(to right, #2c5364, #203a43, #0f2027);
+  /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+  font-family: 'RobotoMono', Courier, monospace;
+  font-size: 14px;
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    font-family: 'JosefinSans', Tahoma, Geneva, Verdana, sans-serif;
+  }
+}
+
+*,
+*:before,
+*:after {
+  margin: 0;
+  box-sizing: border-box;
+}
+
+.mono {
+  font-family: 'RobotoMono', Courier, monospace;
+}
+
+.sans {
+  font-family: 'JosefinSans', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.highlight {
+  color: var(--highlight);
+  text-shadow: 2px 2px white;
+}
+
+.link {
+  color: white;
+
+  * {
+    color: white;
+  }
+}
+
+.link:hover {
+  color: var(--secondary);
+
+  * {
+    color: var(--secondary);
+  }
+}
+
+.col {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.row {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+
+ul {
+  list-style: none;
+}
