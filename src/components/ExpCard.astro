@@ -1,4 +1,5 @@
 ---
+import { slide } from 'astro:transitions'
 import type { Experience } from '../types/experience'
 
 interface Props {
@@ -9,7 +10,7 @@ const { experience, side } = Astro.props
 ---
 
 <section class={side}>
-  <div class='text col'>
+  <div transition:animate='slide' class='text col'>
     <h2>{experience.company}</h2>
     <h3>{experience.position}</h3>
     <h3>{experience.location}</h3>
@@ -20,7 +21,7 @@ const { experience, side } = Astro.props
   <div class='center col'>
     <div class='dot col'><div></div></div>
   </div>
-  <div class='projects col'>
+  <div transition:animate='slide' class='projects col'>
     <ul>
       {
         experience.projects.map((project) => (
@@ -89,7 +90,7 @@ const { experience, side } = Astro.props
         padding-left: 0.5rem;
         margin-bottom: 1rem;
         ul {
-          list-style-type: 'x';
+          list-style-type: '}';
         }
       }
     }
