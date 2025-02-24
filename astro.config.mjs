@@ -11,7 +11,7 @@ export default defineConfig({
     svg: true,
   },
 
-  site: 'https://localhost:4321',
+  site: 'https://www.icarrea.dev',
   integrations: [sitemap()],
   adapter: cloudflare(),
 });
