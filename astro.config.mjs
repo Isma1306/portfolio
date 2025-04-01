@@ -10,7 +10,6 @@ export default defineConfig({
   experimental: {
     svg: true,
   },
-
   site: 'https://www.icarrea.dev',
   integrations: [sitemap()],
   adapter: cloudflare(),
