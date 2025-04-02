@@ -1,12 +1,16 @@
 ---
-
+import { slide } from 'astro:transitions'
 ---
 
 <main class='container'>
-  <section class='text' transition:animate='slide'>
-    <h1>Hi, there!</h1>
-    <h2>I am <span class='mono highlight'>Ismael Carrea</span></h2>
-    <h3>Software Developer, Coffee Enthusiast</h3>
+  <section class='content' transition:animate={slide({ duration: '0.6s' })}>
+    <div class='greeting'>
+      <span class='wave'>👋</span>
+      <h1>Hi, there!</h1>
+    </div>
+    <h2 class='name'>I am <span class='mono highlight'>Ismael Carrea</span></h2>
+    <h3 class='title'>Software Developer, Coffee Enthusiast</h3>
+    <div class='accent-line'></div>
   </section>
 </main>
 
@@ -18,5 +22,120 @@
     flex-direction: row;
     align-items: center;
     justify-content: center;
+    position: relative;
+    overflow: hidden;
+    background: linear-gradient(135deg, rgba(var(--highlight-rgb), 0.05) 0%, rgba(var(--secondary-rgb), 0.05) 100%);
+  }
+
+  .content {
+    text-align: center;
+    max-width: 800px;
+    width: 90%;
+    padding: 2rem;
+    position: relative;
+  }
+
+  .greeting {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    margin-bottom: 1rem;
+  }
+
+  .wave {
+    font-size: 3rem;
+    animation: wave 2.5s infinite;
+    display: inline-block;
+    transform-origin: 70% 70%;
+  }
+
+  @keyframes wave {
+    0% {
+      transform: rotate(0deg);
+    }
+    10% {
+      transform: rotate(14deg);
+    }
+    20% {
+      transform: rotate(-8deg);
+    }
+    30% {
+      transform: rotate(14deg);
+    }
+    40% {
+      transform: rotate(-4deg);
+    }
+    50% {
+      transform: rotate(10deg);
+    }
+    60% {
+      transform: rotate(0deg);
+    }
+    100% {
+      transform: rotate(0deg);
+    }
+  }
+
+  h1 {
+    font-size: 4rem;
+    font-weight: 800;
+    margin: 0;
+    background: linear-gradient(135deg, var(--highlight), var(--secondary));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    letter-spacing: -0.02em;
+  }
+
+  .name {
+    font-size: 2.5rem;
+    font-weight: 600;
+    margin: 0.5rem 0;
+    color: rgba(255, 255, 255, 0.95);
+    letter-spacing: -0.01em;
+  }
+
+  .title {
+    font-size: 1.5rem;
+    font-weight: 400;
+    margin: 0.5rem 0 2rem;
+    color: rgba(255, 255, 255, 0.7);
+    letter-spacing: 0.02em;
+  }
+
+  .accent-line {
+    width: 100px;
+    height: 4px;
+    background: linear-gradient(90deg, var(--highlight), var(--secondary));
+    margin: 0 auto;
+    border-radius: 2px;
+  }
+
+  .highlight {
+    color: var(--highlight);
+    font-weight: 700;
+  }
+
+  .mono {
+    font-family: monospace;
+  }
+
+  @media (max-width: 600px) {
+    h1 {
+      font-size: 3rem;
+    }
+
+    .name {
+      font-size: 2rem;
+    }
+
+    .title {
+      font-size: 1.2rem;
+    }
+
+    .wave {
+      font-size: 2.5rem;
+    }
   }
 </style>
