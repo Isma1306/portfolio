@@ -1,13 +1,82 @@
 ---
-import Layout from '../layouts/Layout.astro'
+import { slide } from 'astro:transitions'
 import experienceList from '../assets/experience.json'
-import ExpCard from '../components/ExpCard.astro'
 import Container from '../components/Container.astro'
+import ExpCard from '../components/ExpCard.astro'
+import Layout from '../layouts/Layout.astro'
 ---
 
 <Layout title='Experience'>
   <Container>
-    <h1>Experience</h1>
-    {experienceList.map((exp, idx) => <ExpCard side={idx % 2 === 0 ? 'left' : 'right'} experience={exp} />)}
+    <div class='title-section'>
+      <h1 class='main-title'>Experience</h1>
+      <div class='title-decoration' transition:animate={slide({ duration: '0.4s' })}>
+        <span class='line'></span>
+        <span class='dot'></span>
+        <span class='line'></span>
+      </div>
+      <p class='subtitle'>Professional Journey</p>
+    </div>
+    <div class='experience-grid'>
+      {experienceList.map((exp, idx) => <ExpCard side={idx % 2 === 0 ? 'left' : 'right'} experience={exp} />)}
+    </div>
   </Container>
 </Layout>
+
+<style>
+  .title-section {
+    text-align: center;
+    margin-bottom: 4rem;
+  }
+
+  .main-title {
+    font-size: 3rem;
+    font-weight: 700;
+    margin: 0;
+    background: linear-gradient(135deg, var(--highlight), var(--secondary));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .title-decoration {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 1rem 0;
+    gap: 1rem;
+  }
+
+  .line {
+    width: 50px;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, var(--highlight), transparent);
+  }
+
+  .dot {
+    width: 8px;
+    height: 8px;
+    background-color: var(--highlight);
+    border-radius: 50%;
+  }
+
+  .subtitle {
+    font-size: 1.2rem;
+    color: rgba(255, 255, 255, 0.7);
+    margin: 0;
+    font-weight: 300;
+  }
+  @media (max-width: 600px) {
+    .main-title {
+      font-size: 2.5rem;
+    }
+
+    .title-section {
+      margin-bottom: 3rem;
+    }
+
+    .line {
+      width: 30px;
+    }
+  }
+</style>

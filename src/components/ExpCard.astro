@@ -1,4 +1,5 @@
 ---
+import { slide } from 'astro:transitions'
 import type { Experience } from '../types/experience'
 import Dot from './details/Dot.astro'
 
@@ -12,7 +13,7 @@ const { experience, side } = Astro.props
 <section class={side}>
   <Dot />
   <div class='center col scrolling'></div>
-  <div class='text col fade-in'>
+  <div class='text col fade-in' transition:animate={slide({ duration: '0.4s' })}>
     <h2>{experience.company}</h2>
     <h3>{experience.position}</h3>
     <h3>{experience.location}</h3>
@@ -20,15 +21,15 @@ const { experience, side } = Astro.props
       {experience.start} - {experience.end}
     </h4>
   </div>
-  <div class='projects col fade-in'>
+  <div class='projects col' transition:animate={slide({ duration: '0.4s' })}>
     <ul>
       {
         experience.projects.map((project) => (
           <li>
-            <h3>{project.title}</h3>
+            <h3 class='fade-in'>{project.title}</h3>
             <ul>
               {project.tasks.map((task) => (
-                <li>{task}</li>
+                <li class='fade-in'>{task}</li>
               ))}
             </ul>
           </li>
@@ -45,17 +46,22 @@ const { experience, side } = Astro.props
     grid-template-areas: 'left center right';
     align-items: center;
     justify-content: center;
+    margin: 2rem 0;
+    position: relative;
   }
+
   .left {
     .text {
       justify-self: end;
       grid-area: left;
       align-items: flex-end;
+      text-align: right;
     }
     .projects {
       grid-area: right;
     }
   }
+
   .right {
     .projects {
       grid-area: left;
@@ -64,74 +70,146 @@ const { experience, side } = Astro.props
       justify-self: start;
       align-items: flex-start;
       grid-area: right;
+      text-align: left;
     }
   }
 
   .text,
   .projects {
-    background: rgba(255, 255, 255, 0.1);
-    padding: 1.2rem;
-    border-radius: 10px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+    background: rgba(255, 255, 255, 0.05);
+    padding: 1.5rem;
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
     transition:
       transform 0.2s,
-      box-shadow 0.2s;
+      box-shadow 0.2s,
+      background 0.2s;
   }
+
   .text:hover,
   .projects:hover {
-    transform: scale(1.03);
-    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+    transform: translateY(-5px);
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
+    background: rgba(255, 255, 255, 0.08);
   }
 
   .text {
     width: fit-content;
-    gap: 0.2em;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5em;
   }
+
+  .text h2 {
+    color: var(--highlight);
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin: 0;
+  }
+
+  .text h3 {
+    font-size: 1.1rem;
+    font-weight: 500;
+    margin: 0;
+    color: rgba(255, 255, 255, 0.9);
+  }
+
+  .text h4 {
+    font-size: 0.9rem;
+    font-weight: 400;
+    color: rgba(255, 255, 255, 0.7);
+    margin: 0;
+  }
+
   .projects {
     h3 {
       margin-bottom: 1rem;
+      color: var(--highlight);
+      font-size: 1.2rem;
+      font-weight: 600;
     }
+
     li {
       margin-left: 1rem;
     }
+
     ul {
       padding-left: 0.5rem;
-      list-style-type: '=>';
+      list-style-type: none;
+
       li {
-        padding-left: 0.5rem;
-        margin-bottom: 1rem;
+        padding-left: 1.5rem;
+        margin-bottom: 1.2rem;
+        position: relative;
+
+        &::before {
+          content: '>_';
+          font-weight: 900;
+          position: absolute;
+          left: 0;
+          color: var(--highlight);
+          font-size: 0.9rem;
+        }
+
         ul {
-          list-style-type: '}';
+          li {
+            &::before {
+              content: '</>';
+              color: rgba(255, 255, 255, 0.6);
+              font-size: 0.8rem;
+            }
+          }
         }
       }
     }
   }
+
   .center {
     justify-self: center;
     grid-area: center;
     background-image: linear-gradient(transparent, var(--highlight), transparent);
     width: 0.2rem;
     height: 100%;
+    opacity: 0.6;
   }
+
   @media only screen and (max-width: 600px) {
+    section {
+      margin: 1.5rem 0;
+    }
+
     .center {
       background-image: linear-gradient(to right, transparent, var(--highlight), transparent);
       width: 100%;
       height: 0.2rem;
     }
+
     .left,
     .right {
       padding-top: 1rem;
-      gap: 0.5rem;
+      gap: 1rem;
       display: flex;
       flex-direction: column;
+
       .text {
         width: 100%;
         align-items: flex-start;
+        text-align: left;
       }
     }
+
     .projects {
       width: 100%;
+    }
+
+    .text h2 {
+      font-size: 1.3rem;
+    }
+
+    .text h3 {
+      font-size: 1rem;
     }
   }
 </style>
