@@ -1,12 +1,13 @@
 ---
 import Github from '../assets/github.svg'
 import Linkedin from '../assets/linkedin.svg'
+
 const links = [
   { name: 'home', href: '/' },
-  { name: 'aboutMe', href: '/about' },
-  { name: 'blog', href: '/blog' },
-  { name: 'works', href: '/works' },
-  { name: 'experience', href: '/experience' },
+  { name: 'aboutMe', href: '/about/' },
+  { name: 'blog', href: '/blog/' },
+  { name: 'works', href: '/works/' },
+  { name: 'experience', href: '/experience/' },
 ]
 const url = Astro.routePattern
 ---
@@ -16,7 +17,9 @@ const url = Astro.routePattern
     {
       links.map((link, idx) => (
         <li class:list={[link.href === url ? 'selected' : '', 'link']}>
-          {link.href === url ? '/*' : '//'}0{idx}
+          <span class='prefix mono'>
+            {link.href === url ? '/*' : '//'}0{idx}
+          </span>
           <a href={link.href}>{link.name}</a>
         </li>
       ))
@@ -26,10 +29,10 @@ const url = Astro.routePattern
     <a href='https://github.com/isma1306' aria-label='link to github page'><Github size='1rem' fill='currentColor' /></a>
 
     <a href='https://linkedin.com/in/ismaelcarrea' aria-label='link to linkedin page'> <Linkedin size='1rem' fill='currentColor' /></a>
-    <label class='switch'>
+    <!-- <label class='switch'>
       <input #darkmode type='checkbox' />
       <span> darkmode</span>
-    </label>
+    </label> -->
   </div>
 </nav>
 
@@ -50,26 +53,73 @@ const url = Astro.routePattern
   ul {
     list-style: none;
     display: flex;
-    gap: 1rem;
+    gap: 1.5rem;
     margin-left: 0;
     padding-left: 0;
   }
-  .selected {
-    color: var(--highlight);
-    * {
-      color: var(--highlight);
+
+  .link {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    transition: all 0.3s ease;
+    a {
+      position: relative;
+      color: white;
+      text-decoration: none;
+      transition: all 0.3s ease;
+    }
+    a::after {
+      content: '';
+      position: absolute;
+      width: 0;
+      height: 2px;
+      bottom: -4px;
+      left: 0;
+      background-color: var(--highlight);
+      transition: width 0.3s ease;
     }
   }
+
+  .prefix {
+    color: var(--secondary);
+    transition: all 0.3s ease;
+  }
+
+  .link:hover {
+    a::after {
+      width: 100%;
+    }
+    .prefix {
+      color: var(--highlight);
+      transform: translateX(2px);
+    }
+  }
+
+  .selected {
+    .prefix {
+      color: var(--highlight);
+    }
+    a {
+      color: var(--highlight);
+    }
+    a::after {
+      width: 100%;
+    }
+  }
+
   .right {
     color: var(--highlight);
     display: flex;
     align-items: center;
-    gap: 1rem;
+    gap: 1.5rem;
     a {
       height: 1rem;
-    }
-    a:hover {
-      color: var(--secondary);
+      transition: all 0.3s ease;
+      :hover {
+        color: var(--highlight);
+      }
     }
   }
 </style>
