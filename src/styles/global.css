@@ -14,30 +14,24 @@
   font-display: swap;
 }
 
-/* :root {
-
-  --highlight: fb8500;
-  --primary: 023047;
-  --secondary: 219ebc;
-
-} */
-
 html,
 body {
-  --highlight: #fb8500;
+  --highlight: #f78166;
   --primary: #023047;
   --secondary: #219ebc;
+  --background: #0d1117;
+  --cardBackground: #161b22;
+  --text: #c9d1d9;
+  --accent-secondary: #58a6ff;
 
   color-scheme: light dark;
 
-  background: #0f2027;
-  /* fallback for old browsers */
-  /* background: -webkit-linear-gradient(to right, #2c5364, #203a43, #0f2027); */
-  /* Chrome 10-25, Safari 5.1-6 */
-  /* background: linear-gradient(to right, #2c5364, #203a43, #0f2027); */
-  /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+  background: linear-gradient(-45deg, #0f0c29, #302b63, #24243e);
+  background-size: 400% 400%;
+  animation: gradientShift 15s ease infinite;
+
   font-family: 'RobotoMono', Courier, monospace;
-  font-size: 14px;
+  font-size: 16px;
 
   h1,
   h2,
@@ -66,15 +60,17 @@ body {
 }
 
 .highlight {
-  color: var(--highlight);
-  text-shadow: 2px 2px white;
+  background: linear-gradient(to right, var(--accent-secondary), var(--highlight));
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
 
 .link {
-  color: white;
+  color: var(--text);
 
   * {
-    color: white;
+    color: var(--text);
   }
 }
 
@@ -138,5 +134,17 @@ body {
   100% {
     scale: 0.8;
     opacity: 0;
+  }
+}
+
+@keyframes gradientShift {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
   }
 }

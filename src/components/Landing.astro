@@ -3,10 +3,10 @@
 ---
 
 <main class='container'>
-  <section class='text' transition:animate='slide'>
-    <h1>Hi, there!</h1>
-    <h2>I am <span class='mono highlight'>Ismael Carrea</span></h2>
-    <h3>Software Developer, Coffee Enthusiast</h3>
+  <section class='text title-section' transition:animate='slide'>
+    <span class='subtle'>Hi, I'm</span>
+    <h2><span class='mono highlight'>Ismael Carrea</span></h2>
+    <h3 class='tagline'>Software Developer ~ Coffee Enthusiast</h3>
   </section>
 </main>
 
@@ -18,5 +18,22 @@
     flex-direction: row;
     align-items: center;
     justify-content: center;
+  }
+  .title-section {
+    font-size: 3rem;
+    font-weight: 700;
+    line-height: 1.2;
+    color: var(--text);
+    text-align: center;
+  }
+
+  .subtle {
+    font-weight: 300;
+    font-size: 1.5rem;
+  }
+
+  .tagline {
+    font-size: 1rem;
+    margin-top: 0.5rem;
   }
 </style>

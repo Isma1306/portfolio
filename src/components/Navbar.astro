@@ -4,23 +4,24 @@ import Linkedin from '../assets/linkedin.svg'
 
 const links = [
   { name: 'home', href: '/' },
-  { name: 'aboutMe', href: '/about/' },
-  { name: 'blog', href: '/blog/' },
-  { name: 'works', href: '/works/' },
-  { name: 'experience', href: '/experience/' },
+  { name: 'aboutMe', href: '/about' },
+  { name: 'blog', href: '/blog' },
+  { name: 'works', href: '/works' },
+  { name: 'experience', href: '/experience' },
 ]
 const url = Astro.routePattern
 ---
 
 <nav>
+  <button id='burger' class='highlight'>|||</button>
   <ul>
     {
       links.map((link, idx) => (
-        <li class:list={[link.href === url ? 'selected' : '', 'link']}>
+        <li class:list={[url === link.href ? 'selected' : '', 'link']}>
           <span class='prefix mono'>
-            {link.href === url ? '/*' : '//'}0{idx}
+            {url === link.href ? '/*' : '//'}0{idx}
           </span>
-          <a href={link.href}>{link.name}</a>
+          <a href={link.href === '/' ? '/' : link.href + '/'}>{link.name}</a>
         </li>
       ))
     }
@@ -37,11 +38,20 @@ const url = Astro.routePattern
 </nav>
 
 <script>
-  const darkmode = document.querySelector('input')
-  darkmode?.addEventListener('change', (event: Event) => {
-    const input = event.target as HTMLInputElement
-    const html = document.querySelector('html')
-    html!.style.setProperty('color-scheme', input.checked ? 'dark' : 'light')
+  document.addEventListener('astro:page-load', () => {
+    const darkmode = document.querySelector('input')
+    const burger = document.querySelector('#burger')
+    const links = document.querySelector('ul')
+    darkmode?.addEventListener('change', (event: Event) => {
+      const input = event.target as HTMLInputElement
+      const html = document.querySelector('html')
+      html!.style.setProperty('color-scheme', input.checked ? 'dark' : 'light')
+    })
+
+    burger?.addEventListener('hover', () => {
+      links?.classList.toggle('open')
+      burger?.classList.toggle('open')
+    })
   })
 </script>
 <style>
@@ -49,6 +59,7 @@ const url = Astro.routePattern
     display: flex;
     justify-content: space-between;
     padding: 1rem;
+    z-index: 2;
   }
   ul {
     list-style: none;
@@ -56,6 +67,13 @@ const url = Astro.routePattern
     gap: 1.5rem;
     margin-left: 0;
     padding-left: 0;
+    opacity: 1;
+    visibility: visible;
+
+    transition:
+      opacity 0.3s ease,
+      transform 0.3s ease,
+      visibility 0.3s ease;
   }
 
   .link {
@@ -120,6 +138,63 @@ const url = Astro.routePattern
       :hover {
         color: var(--highlight);
       }
+    }
+  }
+  #burger {
+    border: none;
+    display: none;
+    transition: all 0.3s ease;
+    font-size: 1.5rem;
+    text-align: center;
+    transform: rotate(90deg);
+    z-index: 3;
+  }
+
+  #burger:hover {
+    cursor: pointer;
+    transform: scale(1.2);
+  }
+
+  @media only screen and (max-width: 700px) {
+    nav {
+      width: 100%;
+      gap: 1rem;
+      padding: 1.5rem;
+      overflow: visible;
+      height: 5rem;
+    }
+    ul {
+      position: absolute;
+      top: 1rem;
+      left: 1rem;
+      visibility: hidden;
+      opacity: 0;
+      transform: translateY(-2rem);
+      background: color-mix(in srgb, var(--cardBackground), transparent 40%);
+      border-radius: 12px;
+      backdrop-filter: blur(10px);
+      flex-direction: column;
+      height: fit-content;
+      gap: 1rem;
+      z-index: 2;
+      padding: 1rem 1rem 1rem 4rem;
+    }
+    #burger {
+      display: block;
+    }
+
+    ul.open {
+      display: flex;
+      opacity: 1;
+      visibility: visible;
+      transform: translateY(0);
+    }
+
+    #burger.open {
+      transform: rotate(270deg);
+    }
+    #burger.open:hover {
+      transform: scale(1.2);
     }
   }
 </style>
