@@ -107,13 +107,11 @@ const { experience, side } = Astro.props
     color: var(--highlight);
     font-size: 1.5rem;
     font-weight: 600;
-    margin: 0;
   }
 
   .text h3 {
     font-size: 1.1rem;
     font-weight: 500;
-    margin: 0;
     color: rgba(255, 255, 255, 0.9);
   }
 
@@ -121,7 +119,6 @@ const { experience, side } = Astro.props
     font-size: 0.9rem;
     font-weight: 400;
     color: rgba(255, 255, 255, 0.7);
-    margin: 0;
   }
 
   .projects {
@@ -170,7 +167,7 @@ const { experience, side } = Astro.props
   .center {
     justify-self: center;
     grid-area: center;
-    background-image: linear-gradient(transparent, white, transparent);
+    background-image: linear-gradient(transparent, var(--highlight), transparent);
     width: 0.2rem;
     height: 100%;
     opacity: 0.6;

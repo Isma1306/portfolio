@@ -1,5 +1,4 @@
 ---
-import { slide } from 'astro:transitions'
 import experienceList from '../assets/experience.json'
 import Container from '../components/Container.astro'
 import ExpCard from '../components/ExpCard.astro'
@@ -10,10 +9,6 @@ import PageTitle from '../components/PageTitle.astro'
 <Layout title='Experience'>
   <Container>
     <PageTitle title='Experience' subtitle='Professional Journey' />
-    <div class='experience-grid'>
-      {experienceList.map((exp, idx) => <ExpCard side={idx % 2 === 0 ? 'left' : 'right'} experience={exp} />)}
-    </div>
+    {experienceList.map((exp, idx) => <ExpCard side={idx % 2 === 0 ? 'left' : 'right'} experience={exp} />)}
   </Container>
 </Layout>
-
-<style></style>
