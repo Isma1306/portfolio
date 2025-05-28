@@ -50,8 +50,8 @@ const url = Astro.routePattern
     padding: 1rem;
     z-index: 2;
   }
+
   ul {
-    list-style: none;
     display: flex;
     gap: 1.5rem;
     margin-left: 0;
@@ -63,13 +63,12 @@ const url = Astro.routePattern
     display: flex;
     align-items: center;
     gap: 0.5rem;
-    transition: all 0.3s ease;
+
     a {
       position: relative;
-      color: white;
       text-decoration: none;
-      transition: all 0.3s ease;
     }
+
     a::after {
       content: '';
       position: absolute;
@@ -119,6 +118,7 @@ const url = Astro.routePattern
       transition: all 0.3s ease;
     }
   }
+
   #burger {
     border: none;
     display: none;

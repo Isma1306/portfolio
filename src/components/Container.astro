@@ -6,9 +6,7 @@
   @use '../styles/global.scss';
   .container {
     @extend .col;
-    padding: 3rem 1rem 8rem 1rem;
     margin: auto;
-
     max-width: 900px;
     min-height: calc(100vh - 4rem);
     background-color: rgba(0, 0, 0, 0.3);
@@ -16,6 +14,7 @@
     border-radius: 20px;
     backdrop-filter: blur(10px);
     box-shadow: 0 8px 32px rgba(0, 0, 0, 0.25);
+    gap: 2rem;
   }
   @media only screen and (max-width: 700px) {
     .container {
