@@ -27,8 +27,8 @@ const url = Astro.routePattern
     }
   </ul>
   <div class='right'>
-    <a href='https://github.com/isma1306' aria-label='link to github page'><Github size='1rem' fill='currentColor' /></a>
-    <a href='https://linkedin.com/in/ismaelcarrea' aria-label='link to linkedin page'> <Linkedin size='1rem' fill='currentColor' /></a>
+    <a href='https://github.com/isma1306' aria-label='link to github page'><Github height='1rem' width='1rem' fill='currentColor' /></a>
+    <a href='https://linkedin.com/in/ismaelcarrea' aria-label='link to linkedin page'> <Linkedin height='1rem' width='1rem' fill='currentColor' /></a>
   </div>
 </nav>
 
@@ -43,7 +43,7 @@ const url = Astro.routePattern
     })
   })
 </script>
-<style>
+<style type='text/scss'>
   nav {
     display: flex;
     justify-content: space-between;
@@ -117,9 +117,6 @@ const url = Astro.routePattern
     a {
       height: 1rem;
       transition: all 0.3s ease;
-      :hover {
-        color: var(--highlight);
-      }
     }
   }
   #burger {

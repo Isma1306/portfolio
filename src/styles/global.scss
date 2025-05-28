@@ -66,6 +66,7 @@ body {
   -webkit-text-fill-color: transparent;
 }
 
+a,
 .link {
   color: var(--text);
 
@@ -74,11 +75,12 @@ body {
   }
 }
 
+a:hover,
 .link:hover {
-  color: var(--secondary);
+  color: var(--highlight);
 
   * {
-    color: var(--secondary);
+    color: var(--highlight);
   }
 }
 
