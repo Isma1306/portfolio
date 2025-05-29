@@ -66,6 +66,19 @@
   },
   {
     "position": "Web Designer",
+    "company": "Strawberry Music Player",
+    "start": "2021",
+    "end": "2021",
+    "location": "Italy - Remote",
+    "projects": [
+      {
+        "title": "Responsive landing page",
+        "tasks": ["Designed and deployed by myself following the directives of the owner.", "Used Bootstrap and jquery to make it fully responsive."]
+      }
+    ]
+  },
+  {
+    "position": "Web Designer",
     "company": "Doris Kessler",
     "start": "2017",
     "end": "2017",
