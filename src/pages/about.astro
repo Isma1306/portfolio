@@ -11,7 +11,7 @@ import Layout from '../layouts/Layout.astro'
     <div class='content'>
       <img
         class='profile-pic'
-        sizes='(max-width: 804px) calc(100vw - 2rem), 804px'
+        sizes='(max-width: 700px) calc(100vw - 2rem), (max-width: 900px) calc(100vw - 6rem), 804px'
         srcset='
               /profile/200.webp 200w,
               /profile/608.webp 608w,
@@ -30,7 +30,7 @@ import Layout from '../layouts/Layout.astro'
   </Container>
 </Layout>
 
-<style>
+<style type='text/scss'>
   .content {
     display: grid;
   }
@@ -38,21 +38,25 @@ import Layout from '../layouts/Layout.astro'
     grid-row: 1;
     grid-column: 1;
 
-    min-height: 535px;
     border-radius: 2rem 2rem 0 0;
     position: relative;
     mask-image: linear-gradient(to bottom, rgba(0, 0, 0, 1), rgba(0, 0, 0, 0.2));
+    min-height: 535px;
+    @media (max-width: 900px) {
+      min-height: 411px;
+    }
+    @media (max-width: 700px) {
+      min-height: 253px;
+    }
+
+    @media (max-width: 425px) {
+      min-height: 180px;
+    }
   }
   p {
     margin-top: 6rem;
     grid-row: 1;
     grid-column: 1;
     align-self: self-end;
-  }
-
-  @media (max-width: 600px) {
-    .profile-pic {
-      min-height: 253px;
-    }
   }
 </style>
