@@ -1,4 +1,5 @@
 ---
+import { fade } from 'astro:transitions'
 import Container from '../components/Container.astro'
 import PageTitle from '../components/PageTitle.astro'
 import Layout from '../layouts/Layout.astro'
@@ -10,6 +11,7 @@ import Layout from '../layouts/Layout.astro'
 
     <div class='content'>
       <img
+        transition:animate={fade({ duration: '0.4s' })}
         class='profile-pic'
         sizes='(max-width: 700px) calc(100vw - 2rem), (max-width: 900px) calc(100vw - 6rem), 804px'
         srcset='
@@ -21,11 +23,21 @@ import Layout from '../layouts/Layout.astro'
         src='/profile/1167.webp'
         alt='Picture of me'
       />
-
-      <p>
-        Lorem ipsum, dolor sit amet consectetur adipisicing elit. Laudantium earum officia recusandae, laborum nemo laboriosam eum, at repellat eveniet, voluptatum nulla voluptates praesentium velit
-        optio nisi consequatur dignissimos dolores! Eligendi.
-      </p>
+      <section>
+        <p>
+          I have been working professionally as a software developer since 2020, but it is something I have enjoyed for as long as I can remember. In my current role, I focus primarily on frontend
+          development. However, in my free time, I love to explore new technologies and frameworks, ranging from microcontrollers for IoT projects to the latest cutting-edge tools and trends in web
+          development.
+        </p>
+        <p>
+          I believe that great code should be simple, efficient, and as free of unnecessary dependencies as possible. Performance is always top of mind when I write code—whether I am building an app
+          from scratch or optimizing existing functionality.
+        </p>
+        <p>
+          Driven by curiosity and a genuine love for coding, I am constantly looking to sharpen my skills and broaden my knowledge. For me, programming is not just a job, it is a craft I am always
+          striving to master.
+        </p>
+      </section>
     </div>
   </Container>
 </Layout>
@@ -53,10 +65,41 @@ import Layout from '../layouts/Layout.astro'
       min-height: 180px;
     }
   }
-  p {
-    margin-top: 6rem;
+  section {
+    margin-top: 21rem;
     grid-row: 1;
     grid-column: 1;
     align-self: self-end;
+  }
+
+  p {
+    margin-bottom: 1.5rem;
+  }
+  p::first-letter {
+    font-size: 2rem;
+    font-weight: bold;
+    color: var(--highlight);
+  }
+  @media (max-width: 900px) {
+    .profile-pic {
+      min-height: 411px;
+    }
+  }
+  @media (max-width: 700px) {
+    .profile-pic {
+      min-height: 253px;
+    }
+    section {
+      margin-top: 19rem;
+    }
+  }
+
+  @media (max-width: 425px) {
+    .profile-pic {
+      min-height: 180px;
+    }
+    section {
+      margin-top: 12rem;
+    }
   }
 </style>
