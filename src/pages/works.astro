@@ -2,10 +2,63 @@
 import Container from '../components/Container.astro'
 import PageTitle from '../components/PageTitle.astro'
 import Layout from '../layouts/Layout.astro'
+import Github from '../assets/github.svg'
 ---
 
 <Layout title='Works'>
   <Container>
     <PageTitle title='Works' subtitle='Latest Projects' />
+    <div class='card'>
+      <div class='row title'>
+        <h2>Snek</h2>
+        <h3>golang - htmx - websockets</h3>
+        <div class='links row'>
+          <a href='https://snek.icarrea.dev' aria-label='link to the snake game'>Live Project</a> - <a href='https://github.com/Isma1306/snek' aria-label='link to the snake repository'
+            ><Github height='1.2rem' width='1.2rem' fill='currentColor' /></a
+          >
+        </div>
+      </div>
+      <p>This is a project I started as a joke. I read that HTMX is terrible for very interactive apps, so I wanted to see how far I could push it. I thought, "Let's test that out..."</p>
+      <p>
+        To test this, I created a classic Snake game using WebSockets, HTMX, and templates written in Go. The only extra dependency is Gorilla WebSocket. On the frontend, I aimed for zero JavaScript,
+        but I needed event listeners for keyboard input, everything else is pure HTMX <em>magic</em>. I didn't focus much on styling, so I owe you that part.
+      </p>
+      <p>
+        Initially, I added multiplayer support for up to four players. Since I was playing often with friends, I decided to implement more features and improve the functionality like lobby creation,
+        join/invite support, and the ability to rejoin a game after disconnection.
+      </p>
+      <p>
+        To maintain performance under these self-imposed constraints, I only send each client the squares that change on every tick, rather than the entire board. I also use go routines for the game
+        loops, channel for send data between them and some mutexes to avoid race conditions <em>the Go data race detector is amazing :chefkiss:</em>.
+      </p>
+      <p>The entire Docker image is around 20MB. I tested it with 10 full lobbies running simultaneously, and it was still using only about 12MB of RAM, so I consider that a success.</p>
+    </div>
   </Container>
 </Layout>
+<style type='text/scss'>
+  p {
+    margin-bottom: 1.5rem;
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+  .title {
+    align-items: baseline;
+    gap: 0.5rem;
+    padding-bottom: 1rem;
+    .links {
+      gap: 0.5rem;
+      margin-left: auto;
+    }
+  }
+
+  @media (max-width: 700px) {
+    .title {
+      flex-direction: column;
+      align-items: flex-start;
+      .links {
+        margin-left: 0;
+      }
+    }
+  }
+</style>
