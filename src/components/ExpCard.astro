@@ -1,5 +1,5 @@
 ---
-import { slide } from 'astro:transitions'
+import { fade } from 'astro:transitions'
 import type { Experience } from '../types/experience'
 import Dot from './details/Dot.astro'
 
@@ -13,7 +13,7 @@ const { experience, side } = Astro.props
 <section class={side}>
   <Dot />
   <div class='center col scrolling'></div>
-  <div class='text col fade-in' transition:animate={slide({ duration: '0.4s' })}>
+  <div class='text card col fade-in' transition:animate={fade({ duration: '0.4s' })}>
     <h2>{experience.company}</h2>
     <h3>{experience.position}</h3>
     <h3>{experience.location}</h3>
@@ -21,7 +21,7 @@ const { experience, side } = Astro.props
       {experience.start} - {experience.end}
     </h4>
   </div>
-  <div class='projects col' transition:animate={slide({ duration: '0.4s' })}>
+  <div class='projects card col' transition:animate={fade({ duration: '0.4s' })}>
     <ul>
       {
         experience.projects.map((project) => (
@@ -73,51 +73,12 @@ const { experience, side } = Astro.props
     }
   }
 
-  .text,
-  .projects {
-    background: var(--cardBackground);
-    padding: 1.5rem;
-    backdrop-filter: blur(10px);
-    border-radius: 12px;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    transition:
-      transform 0.2s,
-      box-shadow 0.2s,
-      background 0.2s;
-  }
-
-  .text:hover,
-  .projects:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
-    background: rgba(255, 255, 255, 0.08);
-  }
-
   .text {
     width: fit-content;
     display: flex;
     flex-direction: column;
     gap: 0.5em;
     color: var(--text);
-  }
-
-  .text h2 {
-    color: var(--highlight);
-    font-size: 1.5rem;
-    font-weight: 600;
-  }
-
-  .text h3 {
-    font-size: 1.1rem;
-    font-weight: 500;
-    color: rgba(255, 255, 255, 0.9);
-  }
-
-  .text h4 {
-    font-size: 0.9rem;
-    font-weight: 400;
-    color: rgba(255, 255, 255, 0.7);
   }
 
   .projects {
