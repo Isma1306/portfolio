@@ -3,9 +3,9 @@
 ---
 
 <main class='container'>
-  <section class='text title-section' transition:animate='slide'>
-    <span class='subtle'>Hi, I'm</span>
-    <h2><span class='mono highlight'>Ismael Carrea</span></h2>
+  <section class='text' transition:animate='slide'>
+    <span class='subtle title-text'>Hi, I'm</span>
+    <h2><span class='mono highlight title-text'>Ismael Carrea</span></h2>
     <h3 class='tagline'>Software Developer ~ Coffee Enthusiast</h3>
   </section>
 </main>
@@ -19,12 +19,14 @@
     align-items: center;
     justify-content: center;
   }
-  .title-section {
+  .text {
+    text-align: center;
+  }
+  .title-text {
     font-size: 3rem;
     font-weight: 700;
     line-height: 1.2;
     color: var(--text);
-    text-align: center;
   }
 
   .subtle {

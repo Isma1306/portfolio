@@ -33,6 +33,28 @@ import Github from '../assets/github.svg'
       </p>
       <p>The entire Docker image is around 20MB. I tested it with 10 full lobbies running simultaneously, and it was still using only about 12MB of RAM, so I consider that a success.</p>
     </div>
+
+    <div class='card'>
+      <div class='row title'>
+        <h2>Wet-Bulb Temp Forecast</h2>
+        <h3>golang - solidjs</h3>
+        <div class='links row'>
+          <a href='https://weather.icarrea.dev' aria-label='link to the snake game'>Live Project</a> - <a
+            href='https://github.com/Isma1306/wetbulb-forecast'
+            aria-label='link to the weather repository'><Github height='1.2rem' width='1.2rem' fill='currentColor' /></a
+          >
+        </div>
+      </div>
+      <p>I wanted to have an easy way to check the wet bulb temperature for the day so I know the best time to run or if it will be dangerously hot</p>
+      <p>
+        For that I used the <a href='https://open-meteo.com/'>open weather API</a> and calculated the wet bulb temperature using the formula from
+        <a href='https://journals.ametsoc.org/view/journals/apme/50/11/jamc-d-11-0143.1.xml'>ametsoc.org</a>. I also added a simple chart to visualize the temperature throughout the day.
+      </p>
+      <p>
+        I used go to fetch the info from <a href='https://open-meteo.com/'>open weather API</a> the and calculate the wet bulb temperature. For the frontend I used solidjs because I wanted to try it and
+        I really like it, loved the signal implementation, how light and fast it is. Great DX.
+      </p>
+    </div>
   </Container>
 </Layout>
 <style type='text/scss'>
