@@ -4,10 +4,21 @@
     "company": "Globant",
     "start": "06/2023",
     "end": "Present",
-    "location": "Italy - Remote",
+    "location": "Italy - Germany - Remote",
     "projects": [
       {
-        "title": "Gantt and management tools for client",
+        "title": "E-commerce for a German Company",
+        "tasks": [
+          "Developed and maintained features across two platforms using Angular, Spartacus, and Contentful.",
+          "Resolved SSR (Server-Side Rendering) issues and improved rendering times by migrating JS based responsive code to pure CSS.",
+          "Migrated to a new cookie consent manager (Cookiebot) and updated GTM (Google Tag Manager) configuration accordingly.",
+          "Implemented SEO and performance enhancements, including fixes for CLS (Cumulative Layout Shift) and FCP (First Contentful Paint) to improve search engine rankings.",
+          "Collaborated with the UI/UX team to keep always improving the user experience and the accessibility.",
+          "Collaborated in an international, cross-functional team environment."
+        ]
+      },
+      {
+        "title": "Gantt and management tools",
         "tasks": [
           "Collaborated closely with the PM to estimate, plan and execute a full refactor of two old projects.",
           "Coordinated with the BE team new API calls improving the DX and optimizing the platform performance.",
@@ -38,7 +49,7 @@
         ]
       },
       {
-        "title": "Bank dashboard",
+        "title": "Dashboard for an international bank",
         "tasks": [
           "In charge of the state management service and the architecture of the data flow using RxJS and GraphQL for a fully reactive app.",
           "Worked close to the PM and the designer to produce a responsive UI / UX according to the requirements of the client.",
