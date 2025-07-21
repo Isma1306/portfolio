@@ -3,6 +3,8 @@ import { fade } from 'astro:transitions'
 import Container from '../components/Container.astro'
 import PageTitle from '../components/PageTitle.astro'
 import Layout from '../layouts/Layout.astro'
+import { Image } from 'astro:assets'
+import profile from '../assets/images/profile/1400.webp'
 ---
 
 <Layout title='About Me'>
@@ -10,19 +12,8 @@ import Layout from '../layouts/Layout.astro'
     <PageTitle title='About Me' subtitle='Always improving, never stopping' />
 
     <div class='content'>
-      <img
-        transition:animate={fade({ duration: '0.4s' })}
-        class='profile-pic'
-        sizes='(max-width: 700px) calc(100vw - 2rem), (max-width: 900px) calc(100vw - 6rem), 804px'
-        srcset='
-              /profile/200.webp 200w,
-              /profile/608.webp 608w,
-              /profile/892.webp 892w,
-              /profile/1167.webp 1167w
-              '
-        src='/profile/1167.webp'
-        alt='Picture of me'
-      />
+      <Image class='profile-pic' transition:animate={fade({ duration: '0.4s' })} src={profile} alt='Picture of me' loading='eager' />
+
       <section>
         <p>
           I have been working professionally as a software developer since 2020, but it is something I have enjoyed for as long as I can remember. In my current role, I focus primarily on frontend
@@ -53,17 +44,6 @@ import Layout from '../layouts/Layout.astro'
     border-radius: 2rem 2rem 0 0;
     position: relative;
     mask-image: linear-gradient(to bottom, rgba(0, 0, 0, 1), rgba(0, 0, 0, 0.2));
-    min-height: 535px;
-    @media (max-width: 900px) {
-      min-height: 411px;
-    }
-    @media (max-width: 700px) {
-      min-height: 253px;
-    }
-
-    @media (max-width: 425px) {
-      min-height: 180px;
-    }
   }
   section {
     margin-top: 21rem;
@@ -80,26 +60,16 @@ import Layout from '../layouts/Layout.astro'
     font-weight: bold;
     color: var(--highlight);
   }
-  @media (max-width: 900px) {
-    .profile-pic {
-      min-height: 411px;
-    }
-  }
+
   @media (max-width: 700px) {
-    .profile-pic {
-      min-height: 253px;
-    }
     section {
-      margin-top: 19rem;
+      margin-top: 16rem;
     }
   }
 
   @media (max-width: 425px) {
-    .profile-pic {
-      min-height: 180px;
-    }
     section {
-      margin-top: 12rem;
+      margin-top: 11rem;
     }
   }
 </style>
