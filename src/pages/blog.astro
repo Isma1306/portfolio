@@ -4,21 +4,22 @@ import PageTitle from '../components/PageTitle.astro'
 import Layout from '../layouts/Layout.astro'
 import { getCollection } from 'astro:content'
 const posts = await getCollection('blog')
+const sortedPosts = posts.sort((a, b) => a.data.date.getTime() - b.data.date.getTime())
 ---
 
 <Layout title='Blog'>
   <Container>
     <PageTitle title='Blog' subtitle='My latest hot takes' />
-    <!--
+
     <ul>
       {
-        posts.map((post) => (
+        sortedPosts.map((post) => (
           <li>
             {post.data.date.toLocaleDateString('it-IT')}
             <a href={`/posts/${post.id}`}>{post.data.title}</a>
           </li>
         ))
       }
-    </ul> -->
+    </ul>
   </Container>
 </Layout>
