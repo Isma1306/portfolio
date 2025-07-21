@@ -12,7 +12,7 @@ import profile from '../assets/images/profile/1400.webp'
     <PageTitle title='About Me' subtitle='Always improving, never stopping' />
 
     <div class='content'>
-      <Image class='profile-pic' transition:animate={fade({ duration: '0.4s' })} src={profile} alt='Picture of me' loading='eager' />
+      <Image class='profile-pic' transition:animate={fade({ duration: '0.4s' })} src={profile} alt='Picture of me' fetchpriority='high' />
 
       <section>
         <p>
