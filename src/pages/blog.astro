@@ -15,8 +15,7 @@ const sortedPosts = posts.sort((a, b) => a.data.date.getTime() - b.data.date.get
       {
         sortedPosts.map((post) => (
           <li>
-            {post.data.date.toLocaleDateString('it-IT')}
-            <a href={`/posts/${post.id}`}>{post.data.title}</a>
+            {post.data.date.toLocaleDateString('it-IT')} <a href={`/posts/${post.id}`}>{post.data.title}</a>
           </li>
         ))
       }

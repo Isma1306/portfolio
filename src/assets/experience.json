@@ -1,31 +1,21 @@
 [
   {
-    "position": "Web UI Developer",
+    "position": "Software Engineer",
     "company": "Globant",
     "start": "06/2023",
     "end": "Present",
     "location": "Italy - Germany - Remote",
     "projects": [
       {
-        "title": "E-commerce for a German Company",
+        "title": "E-commerce & Enterprise Tools",
         "tasks": [
-          "Developed and maintained features across two platforms using Angular, Spartacus, and Contentful.",
-          "Resolved SSR (Server-Side Rendering) issues and improved rendering times by migrating JS based responsive code to pure CSS.",
-          "Migrated to a new cookie consent manager (Cookiebot) and updated GTM (Google Tag Manager) configuration accordingly.",
-          "Implemented SEO and performance enhancements, including fixes for CLS (Cumulative Layout Shift) and FCP (First Contentful Paint) to improve search engine rankings.",
-          "Collaborated with the UI/UX team to keep always improving the user experience and the accessibility.",
-          "Collaborated in an international, cross-functional team environment."
-        ]
-      },
-      {
-        "title": "Gantt and management tools",
-        "tasks": [
-          "Collaborated closely with the PM to estimate, plan and execute a full refactor of two old projects.",
-          "Coordinated with the BE team new API calls improving the DX and optimizing the platform performance.",
-          "Led the migration of the angular 8 projects to Angular 16, incorporating new best practices and improving code quality meeting SonnarQube quality standards.",
-          "Supervised a junior developer in the creation of unit test in Jasmine and E2E test in Cypress for the newly developed code ensuring proper coverage.",
-          "Improved the local dev environment with a dockerized version of the BE and created new pipelines to streamline the delivery process in Jenkins and OpenShift.",
-          "Contributed to writing technical documentation of the new features required by the client and helped to estimate the tasks."
+          "Planned and executed the strategic migration of main frontend platforms from Angular to Next.js/React, while collaborating with product leadership to refactor legacy systems for higher scalability.",
+          "Streamlined local development workflows by dockerizing backend services and creating automated CI/CD deployment pipelines using Jenkins and OpenShift.",
+          "Partnered with backend teams to redesign API endpoints and optimize data exchange, significantly improving overall system performance and developer experience (DX).",
+          "Improved Core Web Vitals (CLS and FCP) and resolved Server-Side Rendering (SSR) bottlenecks by replacing heavy JavaScript rendering logic with clean, efficient SCSS.",
+          "Upgraded project infrastructure across Angular versions while enforcing strict SonarQube code quality standards.",
+          "Supervised junior developers and established automated testing protocols with Jasmine and Cypress to ensure code coverage.",
+          "Partnered closely with international product teams, UI/UX designers, and managers to deliver accessible features and integrate third-party solutions like Cookiebot and Google Tag Manager."
         ]
       }
     ]
@@ -33,71 +23,62 @@
   {
     "position": "Software Developer",
     "company": "Hyntelo",
-
     "start": "08/2022",
     "end": "06/2023",
     "location": "Italy - Remote",
     "projects": [
       {
-        "title": "Full stack GIS app",
+        "title": "Full Stack GIS & Analytics Platform",
         "tasks": [
-          "Leaded the front-end development of an existing angular GIS project. Including CRUD of layers, data manipulation with leaflet and creation of Pdf reports.",
-          "Refactored the code to optimize it and divided the components in modules to handle lazy loading.",
-          "Improved support to different formats of layers with the help of the leaflet library.",
-          "Written scripts to monitor and keep running the BE and the geoserver.",
-          "Helped in the configuration of the Geoserver and the decision on how to implement solutions to optimize the performance."
-        ]
-      },
-      {
-        "title": "Dashboard for an international bank",
-        "tasks": [
-          "In charge of the state management service and the architecture of the data flow using RxJS and GraphQL for a fully reactive app.",
-          "Worked close to the PM and the designer to produce a responsive UI / UX according to the requirements of the client.",
-          "Coded with reusability and simplicity in mind to create a easy to read and maintainable code.",
-          "Responsible of controlling the code quality of the new developers."
+          "Led the architectural refactoring of a high-throughput geospatial analytics platform built on Angular, optimizing data manipulation routines for spatial layers and spatial reporting using Leaflet.",
+          "Designed scalable state management and reactive data streams using RxJS and GraphQL to power real-time, responsive dashboard interfaces.",
+          "Authored automated scripts to monitor microservice health and maintain continuous operational uptime for backend services and GeoServer instances.",
+          "Re-architected monolithic codebases into lazy-loaded feature modules to optimize load times, while conducting code reviews to ensure strict quality standards across engineering teams."
         ]
       }
     ]
   },
   {
-    "position": "Software Engineer",
+    "position": "Full Stack Software Engineer",
     "company": "Sisyphus - Fitness",
-    "start": "2021",
-    "end": "2021",
+    "start": "2022",
+    "end": "2022",
     "location": "Italy - Remote",
     "projects": [
       {
-        "title": "Full stack Fitness app",
+        "title": "Full Stack Fitness App",
         "tasks": [
-          "Built the frontend with Angular using Material UI for styling. Focusing on modularity and separation of concerns.",
-          "Coded the backend using Node, with Express and postgreSQL with Prisma."
+          "Designed and built a full-stack fitness tracking web application from scratch using Node.js, Express, PostgreSQL, Prisma, and an Angular frontend styled with Material UI.",
+          "Modeled relational database schemas, configured Prisma ORM migrations, and implemented RESTful APIs to manage asynchronous user data and workout analytics."
         ]
       }
     ]
   },
   {
-    "position": "Web Designer",
+    "position": "Web Developer",
     "company": "Strawberry Music Player",
     "start": "2021",
     "end": "2021",
     "location": "Italy - Remote",
     "projects": [
       {
-        "title": "Responsive landing page",
-        "tasks": ["Designed and deployed by myself following the directives of the owner.", "Used Bootstrap and jquery to make it fully responsive."]
+        "title": "Responsive Web Application",
+        "tasks": ["Designed, developed, and deployed a fully responsive web application following product owner specifications, utilizing HTML, CSS, Bootstrap, and JavaScript."]
       }
     ]
   },
   {
-    "position": "Web Designer",
-    "company": "Doris Kessler",
-    "start": "2017",
+    "position": "Project Manager / Geologist",
+    "company": "Minetech",
+    "start": "2014",
     "end": "2017",
-    "location": "Italy - Remote",
+    "location": "Argentina",
     "projects": [
       {
-        "title": "Wordpress landing page",
-        "tasks": ["Created a web page using WordPress customizing the template.", "Designed the webpage according to the requirements of the client."]
+        "title": "Technical Project Management",
+        "tasks": [
+          "Managed field engineering teams of 4 to 6 technicians through full project life cycles, handling cross-functional communication, risk mitigation strategies, and stakeholder negotiations."
+        ]
       }
     ]
   }
