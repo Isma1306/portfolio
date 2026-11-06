@@ -1,0 +1,229 @@
+---
+title: 'Building a Matter air quality monitor'
+author: me
+date: 11-06-2026
+description: 'My latest finished project, a Matter air quality monitor with an e-ink screen and a 3D-printed case. Matter is still weird.'
+relatedPosts: []
+---
+
+import { Image } from 'astro:assets'
+import frontWorking from '../../assets/images/blog/air_monitor/frontworking.webp'
+import wired from '../../assets/images/blog/air_monitor/wired.webp'
+import sensorConnected from '../../assets/images/blog/air_monitor/sensorConnected.webp'
+import screen from '../../assets/images/blog/air_monitor/screen.webp'
+import prototype from '../../assets/images/blog/air_monitor/prototype.webp'
+import frontFinished from '../../assets/images/blog/air_monitor/frontFinished.webp'
+import backplate from '../../assets/images/blog/air_monitor/backplate.webp'
+import homeAssistant from '../../assets/images/blog/air_monitor/homeAssistant.webp'
+import homekit from '../../assets/images/blog/air_monitor/homekit.webp'
+
+<figure>
+  <Image
+    class='img-border'
+    src={frontWorking}
+    width={700}
+    alt='The finished air quality monitor: a black 3D-printed case with an e-ink screen showing temperature, humidity, CO2, TVOC, PM2.5, PM10, HCHO and an A+ IAQI score'
+  />
+</figure>
+
+## The idea
+
+I wanted to have an air quality monitor that can be connected to HomeKit and Home Assistant at the same time. Of course I could buy one, and it would probably be cheaper, but it wouldn't be mine.
+
+If you just want the code and the case, everything is in the [repo](https://github.com/Isma1306/air-quality-matter).
+
+## Planning
+
+First, I decided to use Matter because I like the idea of a protocol compatible with everything. Sadly, it hasn't been adopted as much as I was expecting, but it is still the best solution for multiplatform.
+I also chose to use the Arduino IDE because the Espressif Matter SDK is a pain to get working. I don't know why, but there are a thousand ways to install it and all of them give problems. I lost some flexibility, and at some point I will probably migrate to it anyway, but for something simple just for myself it is great.
+For hardware, I used an ESP32-C6 that I already had, an e-ink screen because I always wanted to play with one, and an M702 sensor because it looked accurate and has a good array of measurements for an indoor setup. Besides that, I wanted to (finally) do something useful with my 3D printer, so I decided to design my own case for it.
+
+I already had some experience playing around with Matter and I understood the basics of the protocol, so my first step was going to the [Matter ESP32 library](https://github.com/espressif/arduino-esp32/tree/master/libraries/Matter). Sadly, as you can see, there are examples for humidity and temperature, but for the rest I had to read the library and try to understand its internals to make it work. 90% of my work, software-wise, was bridging that gap; there isn't much documentation.
+
+### Parts
+
+- [Waveshare ESP32-C6-Zero](https://docs.waveshare.com/ESP32-C6-Zero?variant=ESP32-C6-Zero), but any ESP32-C6 or Matter-compatible board should work with some tiny adjustments.
+- [WeAct 4.2"](https://github.com/WeActStudio/WeActStudio.EpaperModule) black and white e-paper module.
+- M702 UART sensor: CO2, TVOC, formaldehyde (HCHO), PM2.5, PM10, temperature and humidity in one box.
+- A 3D-printed case, plus some M2 and M3 brass heat-set inserts and screws.
+
+### Wiring
+
+| Screen pin       | ESP32-C6-Zero |
+| ---------------- | ------------- |
+| VCC              | 3V3           |
+| GND              | GND           |
+| SDA (DIN / MOSI) | GP21          |
+| SCL (CLK / SCK)  | GP22          |
+| CS               | GP20          |
+| D/C              | GP19          |
+| RES              | GP18          |
+| BUSY             | GP14          |
+
+| Sensor pin | ESP32-C6-Zero |
+| ---------- | ------------- |
+| VCC        | 5V            |
+| GND        | GND           |
+| TX         | GP0           |
+
+> **Be careful:** the sensor needs 5V and the screen 3.3V. Don't mix them up.
+
+I picked the pins to avoid the strapping pins (4, 5, 8, 9, 15), the native USB (12, 13) and UART0 (16, 17), so the board still boots and flashes normally with everything connected.
+
+<figure>
+  <Image class='img-border' src={wired} alt='The M702 sensor, the ESP32-C6-Zero and the back of the e-ink screen wired together on a desk' loading='lazy' />
+  <figcaption>Everything wired together, before it had a case.</figcaption>
+</figure>
+
+## First steps
+
+### ESP32 + Matter
+
+I started with one of the examples as a base and built from there. [As you can see](https://github.com/espressif/arduino-esp32/blob/master/libraries/Matter/examples/Sensors/MatterHumiditySensor/MatterHumiditySensor.ino), the base is very simple: first you have a setup where you connect to Matter, and then the loop where you read the sensor and send the readings to the Matter network.
+To make this work I did one thing at a time. First, I made sure I could commission my ESP32 to the Matter network. That was fairly straightforward since the example already does it. Of course, I removed the SSID and the network password and used Bluetooth to get the credentials from my phone. On first boot the device advertises over BLE, the Home app sends the Wi-Fi credentials during pairing, and Matter stores them, so nothing is hardcoded. If you hold the BOOT button for 5 seconds, it decommissions itself and you can pair it again.
+
+### The M702 sensor
+
+The second step for me was connecting the M702 and getting the readings. The sensor is powered by 5V because it has a fan to move the air through it, and then there is simply a TX cable that sends the digital signal. Finding documentation on how to read from this sensor was kind of painful; [Scribd](https://www.scribd.com/document/635339047/M701-UART-data-sheet) was the place where I found it.
+With that, it is just a matter of reading the bytes and then doing a checksum to see if the data is corrupted. The sensor sends a 17-byte frame at 9600 baud that starts with `0x3C 0x02`, and the last byte is the sum of all the others:
+
+```cpp
+while (m702Serial.available() >= 17) {
+  if (m702Serial.read() == 0x3C && m702Serial.peek() == 0x02) {
+    buffer[0] = 0x3C;
+    uint16_t checksum = 0x3C;
+    for (int i = 1; i < 17; i++) {
+      buffer[i] = m702Serial.read();
+      if (i < 16) checksum += buffer[i];
+    }
+
+    if ((checksum & 0xFF) == buffer[16]) {
+      co2  = (buffer[2] << 8) | buffer[3];
+      hcho = (buffer[4] << 8) | buffer[5];
+      tvoc = (buffer[6] << 8) | buffer[7];
+      pm25 = (buffer[8] << 8) | buffer[9];
+      pm10 = (buffer[10] << 8) | buffer[11];
+      temp = (buffer[12] & 0x7F) + (buffer[13] / 100.0);
+      if (buffer[12] & 0x80) temp = -temp; // the top bit is the sign
+      hum  = buffer[14] + (buffer[15] / 100.0);
+    }
+  }
+}
+```
+
+One thing the datasheet doesn't make obvious: the gas readings (CO2, TVOC and HCHO) are garbage for the first few minutes while the sensor warms up. So for the first 5 minutes the screen shows `--` for those values and they are not sent to Matter at all. Temperature, humidity and PM are fine from the start.
+
+<figure>
+  <Image class='img-border' src={sensorConnected} width={600} alt='First test: the e-ink screen showing the raw sensor readings as plain text' loading='lazy' />
+  <figcaption>The first readings from the sensor on the screen, just plain text.</figcaption>
+</figure>
+
+### The screen
+
+Again, I checked the base example given ([link to the library](https://github.com/WeActStudio/WeActStudio.EpaperModule/blob/master/Example/EpaperModuleTest_Arduino_ESP32/EpaperModuleTest_Arduino_ESP32.ino)) and worked from there. I used the [GxEPD2](https://github.com/ZinggJM/GxEPD2) library as recommended by the example.
+
+<figure>
+  <Image class='img-border' src={screen} width={600} alt='The e-ink screen with the final card layout, still outside the case and wired to the sensor' loading='lazy' />
+  <figcaption>The final layout.</figcaption>
+</figure>
+
+## Putting it all together
+
+So now it was just a matter of combining all the code to show the sensor readings on the screen and update the data through Matter.
+
+### The Matter sensor issue
+
+Here I realized that most of the sensors didn't have a class in the Arduino library. For humidity and temperature it is very simple: just add the class and use the method to update the value. For the rest, I had to go one level down and use the `esp_matter` API directly. There are a lot of things going on there, but basically in Matter a device is made of endpoints, and each endpoint has clusters that hold the actual values. So I had to create an Air Quality Sensor endpoint and add a concentration measurement cluster to it for each reading (CO2, TVOC, HCHO, PM2.5 and PM10), plus an Air Quality cluster for the overall rating. I am not a big C++ enjoyer, so it took me a while to understand it and make it work.
+
+All the concentration clusters are configured the same way, so I ended up with a small helper. This is the part I couldn't find documented anywhere:
+
+```cpp
+void addConcentrationCluster(endpoint_t* ep, ConcentrationCreateFn createFn,
+                             uint8_t unit, float minVal, float maxVal) {
+  cluster::concentration_measurement::config_t cfg;
+  cfg.measurement_medium = 0;  // Air
+  cfg.feature_flags = cluster::concentration_measurement::feature::numeric_measurement::get_id();
+  cfg.features.numeric_measurement.measurement_unit = unit;
+  cfg.features.numeric_measurement.min_measured_value = nullable<float>(minVal);
+  cfg.features.numeric_measurement.max_measured_value = nullable<float>(maxVal);
+  cfg.delegate = nullptr;
+  createFn(ep, &cfg, CLUSTER_FLAG_SERVER);
+}
+
+// CO2 is reported in ppm, everything else in µg/m³
+addConcentrationCluster(aqEndpoint, cluster::carbon_dioxide_concentration_measurement::create,
+                        MEAS_UNIT_PPM, 400.0f, 5000.0f);
+addConcentrationCluster(aqEndpoint, cluster::pm25_concentration_measurement::create,
+                        MEAS_UNIT_UGM3, 0.0f, 999.0f);
+// ...same for TVOC, HCHO and PM10
+```
+
+Updating a value is then just a matter of writing to the `MeasuredValue` attribute of the right cluster with `esp_matter::attribute::update`.
+
+A couple of small things I added along the way:
+
+- **Device name:** by default HomeKit shows the generic Espressif vendor and product names. I wrapped the default `DeviceInstanceInfoProvider` to override only those two, so now it shows up as "Air Quality Sensor V1" with my name as the manufacturer.
+- **Wi-Fi power save:** the ESP32 turns on Wi-Fi power saving by default. Since it is plugged in all the time anyway, I turn it off once it connects.
+
+### E-ink, the secret drawback
+
+The biggest problem with the screen is that e-ink screens deteriorate really quickly with each redraw (I didn't know about that). You can do partial redraws, but over time they generate shadowing effects that you can erase with a full redraw, which wears the screen more, so you have to balance it. In my case, I decided to only redraw when a value changed enough to be noticeable, to avoid the noise of the sensor itself and ruining the screen too quickly. On top of that, every 50 minutes it does a full redraw to avoid ghosting. Maybe I could fine-tune it in the future, but for me it is enough. Next time I will probably use another kind of screen, but I always wanted to play with one.
+
+### IAQI
+
+There is this index that gives you a general idea of the condition of the air without having to check each specific value. The sensor itself doesn't give you this value, and there are many ways to calculate it, but basically you check each value and divide it into categories from great to bad. The result is the worst value of all of them, because if one is bad for your health, the air itself is. I checked the general safe values for each parameter and created the categories from that. This isn't very precise, but the IAQI isn't either.
+
+These are the thresholds I ended up with. For PM I used the bands from the European Air Quality Index:
+
+| Grade | CO2 (ppm) | PM2.5 (µg/m³) | PM10 (µg/m³) | TVOC (µg/m³) | HCHO (µg/m³) |
+| ----- | --------- | ------------- | ------------ | ------------ | ------------ |
+| A+    | ≤ 600     | ≤ 10          | ≤ 20         | ≤ 300        | ≤ 30         |
+| A     | ≤ 800     | ≤ 20          | ≤ 40         | ≤ 500        | ≤ 60         |
+| B     | ≤ 1000    | ≤ 25          | ≤ 50         | ≤ 1000       | ≤ 100        |
+| C     | ≤ 1500    | ≤ 50          | ≤ 100        | ≤ 3000       | ≤ 200        |
+| F     | > 1500    | > 50          | > 100        | > 3000       | > 200        |
+
+Humidity also counts, but only as a comfort penalty, so it can never push the grade lower than B: under 30% or over 60% gives an A, and under 25% or over 70% gives a B.
+
+The nice part is that Matter's Air Quality cluster has its own scale (Good, Fair, Moderate, Poor, Very Poor), so I map my grade onto it, and HomeKit and Home Assistant show the same rating as the screen.
+
+### The case
+
+I used FreeCAD, which took me a while to get used to. I had to print several prototypes that were too ugly even for me, but I got a good result. An engineer would probably see my CAD and want to cut off my hands, but it works: the things stay inside, it is stable, and it is enough for me.
+I am new to the world of 3D printing, so I had to learn a few tricks. To hold it all together, I opted for some M2 and M3 brass heat-set inserts that let me use normal screws. The 3MF file is in the [repo](https://github.com/Isma1306/air-quality-matter) if you want to print your own.
+
+<figure>
+  <Image class='img-border' src={prototype} width={600} alt='One of the early case prototypes held in hand' loading='lazy' />
+  <figcaption>The first prototype.</figcaption>
+</figure>
+
+<figure>
+  <Image class='img-border' src={frontFinished} alt='The front part of the final case with brass heat-set inserts, next to the back of the screen' loading='lazy' />
+  <figcaption>The front of the final case, with the brass inserts already in.</figcaption>
+</figure>
+
+<figure>
+  <Image class='img-border' src={backplate} alt='The case backplate with standoffs, the ESP32 holder and the sensor air grille' loading='lazy' />
+  <figcaption>The backplate, where the sensor and the ESP32 are attach.</figcaption>
+</figure>
+
+## Conclusion
+
+I am really happy with the device. It works well: my wife can ignore it on HomeKit, I can check it on Home Assistant, and I get to feel important for being early on a protocol that may never fully take off.
+It is not perfect, though: Home Assistant reads the TVOC value with the wrong unit (ppm instead of µg/m³) and ignores the HCHO completely. HomeKit doesn't show it either, so the formaldehyde only shows up on the device's own screen, a small point in favour of keeping it.
+
+<div class='row' style={{ gap: '1rem', justifyContent: 'center', alignItems: 'flex-start', flexWrap: 'wrap' }}>
+  <figure>
+    <Image class='img-border' src={homekit} width={320} alt='The sensor in the HomeKit app showing air quality Good, PM2.5, PM10, VOC density and CO2 level' loading='lazy' />
+    <figcaption>HomeKit</figcaption>
+  </figure>
+  <figure>
+    <Image class='img-border' src={homeAssistant} width={320} alt='The sensor in Home Assistant showing air quality, CO2, humidity, PM2.5, PM10, temperature and VOCs in ppm' loading='lazy' />
+    <figcaption>Home Assistant</figcaption>
+  </figure>
+</div>
+
+I learned a lot about how Matter works, how ESP32 programming works, and how annoying it is to design something in 3D.
+If I ever decide to do a V2, I probably won't use an e-ink screen: it looks cool, but it is not the right technology for this because of the wear from redrawing. And since I already have one foot in the ESP-IDF Matter SDK, at some point I will migrate everything there so I can use Matter over Thread, just to play with it.
+
+Feel free to check out the [repo](https://github.com/Isma1306/air-quality-matter) to build your own, or to point out my mistakes.

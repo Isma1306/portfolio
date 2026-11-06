@@ -4,7 +4,7 @@ import PageTitle from '../components/PageTitle.astro'
 import Layout from '../layouts/Layout.astro'
 import { getCollection } from 'astro:content'
 const posts = await getCollection('blog')
-const sortedPosts = posts.sort((a, b) => a.data.date.getTime() - b.data.date.getTime())
+const sortedPosts = posts.sort((a, b) => b.data.date.getTime() - a.data.date.getTime())
 ---
 
 <Layout title='Blog'>

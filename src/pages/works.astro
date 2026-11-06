@@ -10,6 +10,24 @@ import Github from '../assets/github.svg'
     <PageTitle title='Works' subtitle='Latest Projects' />
     <div class='card'>
       <div class='row title'>
+        <h2>Air Quality Monitor</h2>
+        <h3>esp32 - matter - c++</h3>
+        <div class='links row'>
+          <a href='/posts/matterairmonitor' aria-label='link to the blog post about the air quality monitor'>Blog Post</a> - <a
+            href='https://github.com/Isma1306/air-quality-matter'
+            aria-label='link to the air quality monitor repository'><Github height='1.2rem' width='1.2rem' fill='currentColor' /></a
+          >
+        </div>
+      </div>
+      <p>
+        An indoor air quality monitor that works with HomeKit and Home Assistant at the same time thanks to Matter. An ESP32-C6 reads CO2, TVOC, formaldehyde, PM2.5, PM10, temperature and humidity
+        from an M702 sensor, shows everything on an e-ink screen and calculates an overall air quality score.
+      </p>
+      <p>Most of the work was making the Arduino Matter library do things it has no examples for, and learning that e-ink screens don't like to be redrawn. I also designed and 3D printed the case.</p>
+    </div>
+
+    <div class='card'>
+      <div class='row title'>
         <h2>Snek</h2>
         <h3>golang - htmx - websockets</h3>
         <div class='links row'>
@@ -39,7 +57,7 @@ import Github from '../assets/github.svg'
         <h2>Wet-Bulb Temp Forecast</h2>
         <h3>golang - solidjs</h3>
         <div class='links row'>
-          <a href='https://wetbulb.icarrea.dev' aria-label='link to the snake game'>Live Project</a> - <a
+          <a href='https://wetbulb.icarrea.dev' aria-label='link to the wet-bulb forecast'>Live Project</a> - <a
             href='https://github.com/Isma1306/wetbulb-forecast'
             aria-label='link to the weather repository'><Github height='1.2rem' width='1.2rem' fill='currentColor' /></a
           >
@@ -47,12 +65,13 @@ import Github from '../assets/github.svg'
       </div>
       <p>I wanted to have an easy way to check the wet bulb temperature for the day so I know the best time to run or if it will be dangerously hot</p>
       <p>
-        For that I used the <a href='https://open-meteo.com/'>open weather API</a> and calculated the wet bulb temperature using the formula from
-        <a href='https://journals.ametsoc.org/view/journals/apme/50/11/jamc-d-11-0143.1.xml'>ametsoc.org</a>. I also added a simple chart to visualize the temperature throughout the day.
+        For that I used the <a href='https://open-meteo.com/'>open weather API</a> and calculated the wet bulb temperature using the formula from <a
+          href='https://journals.ametsoc.org/view/journals/apme/50/11/jamc-d-11-0143.1.xml'>ametsoc.org</a
+        >. I also added a simple chart to visualize the temperature throughout the day.
       </p>
       <p>
-        I used go to fetch the info from <a href='https://open-meteo.com/'>open weather API</a> the and calculate the wet bulb temperature. For the frontend I used solidjs because I wanted to try it and
-        I really like it, loved the signal implementation, how light and fast it is. Great DX.
+        I used go to fetch the info from <a href='https://open-meteo.com/'>open weather API</a> and calculate the wet bulb temperature. For the frontend I used solidjs because I wanted to try it and I really
+        like it, loved the signal implementation, how light and fast it is. Great DX.
       </p>
     </div>
   </Container>
