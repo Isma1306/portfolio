@@ -1,0 +1,13 @@
+# Default for everything (HTML, sitemap, rss...): browsers and the edge must revalidate
+/*
+  Cache-Control: public, max-age=0, must-revalidate
+
+# Hashed build assets: filenames change on every build, safe to cache forever
+/_astro/*
+  ! Cache-Control
+  Cache-Control: public, max-age=31536000, immutable
+
+# Fonts rarely change
+/fonts/*
+  ! Cache-Control
+  Cache-Control: public, max-age=31536000, immutable
